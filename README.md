@@ -1,64 +1,90 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+## Installation
+Clone the project repository
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+```bash
+  git clone https://github.com/ChronoIII/ProductLTE-Laravel
 
-## About Laravel
+  cd ProductLTE-Laravel
+```
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Install XAMPP
+Install XAMPP with PHP version 7.4
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **[XAMPP (Windows)](https://sourceforge.net/projects/xampp/files/XAMPP%20Windows/7.4.33/)**
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Install SSL Certificate
+Follow [this guide](https://shellcreeper.com/how-to-create-valid-ssl-in-localhost-for-xampp/) on how to create SSL Certificate
 
-## Learning Laravel
+For the vhost configuration, you can copy the configuration below. 
+```
+<VirtualHost *:80>
+    DocumentRoot "C:\ProductLTE-Laravel\public"
+    ServerName product-lte.local
+    Redirect permanent / "https://product-lte.local"
+</VirtualHost>
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+<VirtualHost *:443>
+	ServerName          product-lte.local
+	ServerAlias         product-lte.local
+	DocumentRoot        "C:\ProductLTE-Laravel\public"
+	SSLEngine on
+	SSLCertificateFile "C:\xampp\apache\conf\ssl.crt\server.crt"
+	SSLCertificateKeyFile "C:\xampp\apache\conf\ssl.key\server.key"
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    <Directory "C:\ProductLTE-Laravel">
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+```
 
-## Laravel Sponsors
+## Install NodeJS
+NodeJS is necessary for running npm.
+You can download it [here](https://nodejs.org/en).
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Download the LTS version and install.
 
-### Premium Partners
+## Install Composer
+Composer is tool for dependency management in PHP.
+It is necessary to install/update Laravel libraries.
+You can download it [here](https://getcomposer.org/download/).
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## Install Dependencies
+Run this commands under the project terminal
+```
+composer install
+npm install
+npm run dev
+```
 
-## Contributing
+## Environment Variables
+Copy the .env.example file
+```
+cp .env.example .env
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Generate Secret App Key
+Run key:generate under project directory terminal to generate encrypted key
+```
+php artisan key:generate
+```
 
-## Code of Conduct
+## Create Database
+First, access the phpMyAdmin page
+- http://localhost/phpmyadmin/
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+On the left sidebar, 
+- Click New 
+- Type "laravel" as Database name.
+- Click on Create button
 
-## Security Vulnerabilities
+## Migrate Database tables
+Run this commands under the project terminal
+```
+php artisan migrate
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Access webpage
+Site can now be access on:
+- https://product-lte.local
